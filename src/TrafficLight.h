@@ -40,11 +40,12 @@ class TrafficLight : public TrafficObject
 public:
     // constructor / desctructor
     TrafficLight();
-    TrafficLight(const TrafficLight& other);
-    TrafficLight(TrafficLight&& other);
+    ~TrafficLight(){}
+    // TrafficLight(const TrafficLight& other);
+    // TrafficLight(TrafficLight&& other);
 
-    TrafficLight operator=(const TrafficLight &other);
-    TrafficLight operator=(TrafficLight &&other);
+    // TrafficLight operator=(const TrafficLight &other);
+    // TrafficLight operator=(TrafficLight &&other);
 
     // getters / setters
 
