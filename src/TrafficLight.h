@@ -4,6 +4,7 @@
 #include <mutex>
 #include <deque>
 #include <condition_variable>
+#include <random>
 #include "TrafficObject.h"
 
 // forward declarations to avoid include cycle
@@ -20,7 +21,14 @@ class MessageQueue
 {
 public:
 
+    void send(T &&rvalue);
+    T receive();
+
 private:
+
+    std::mutex _mutex;
+    std::condition_variable _conditional;
+    std::deque<T> _queue;
     
 };
 
