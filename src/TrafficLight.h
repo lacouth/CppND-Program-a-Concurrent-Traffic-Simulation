@@ -5,6 +5,7 @@
 #include <deque>
 #include <condition_variable>
 #include <random>
+#include <thread>
 #include "TrafficObject.h"
 
 // forward declarations to avoid include cycle
@@ -21,7 +22,7 @@ class MessageQueue
 {
 public:
 
-    void send(T &&rvalue);
+    void send(T &&msg);
     T receive();
 
 private:
@@ -38,7 +39,7 @@ private:
 // can be either „red“ or „green“. Also, add the private method „void cycleThroughPhases()“. 
 // Furthermore, there shall be the private member _currentPhase which can take „red“ or „green“ as its value. 
 
-enum TrafficLightPhase{
+enum class TrafficLightPhase{
     red,
     green
 };
@@ -49,12 +50,6 @@ public:
     // constructor / desctructor
     TrafficLight();
     ~TrafficLight(){}
-    // TrafficLight(const TrafficLight& other);
-    // TrafficLight(TrafficLight&& other);
-
-    // TrafficLight operator=(const TrafficLight &other);
-    // TrafficLight operator=(TrafficLight &&other);
-
     // getters / setters
 
     TrafficLightPhase getCurrentPhase();
@@ -71,6 +66,7 @@ private:
     // FP.4b : create a private member of type MessageQueue for messages of type TrafficLightPhase 
     // and use it within the infinite loop to push each new TrafficLightPhase into it by calling 
     // send in conjunction with move semantics.
+    MessageQueue<TrafficLightPhase> _queue;
 
     std::condition_variable _condition;
     std::mutex _mutex;
